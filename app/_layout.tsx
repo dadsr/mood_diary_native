@@ -9,8 +9,9 @@ export default function RootLayout() {
                 name="index"
                 options={{
                     title: 'Home',
-                    headerStyle: style.header,
+                    headerStyle: styles.header,
                     headerTintColor: '#fff',
+                    headerTitleStyle: styles.headerTitle,
                 }}
             />
             <Stack.Screen
@@ -19,13 +20,17 @@ export default function RootLayout() {
                     title: 'Edit Case',
                     headerStyle: { backgroundColor: '#4630EB' },
                     headerTintColor: '#fff',
+                    headerTitleStyle: styles.headerTitle,
+                    presentation: 'modal',
+                    headerBackTitle: 'Back',
+                    gestureEnabled: true,
                 }}
             />
         </Stack>
     );
 }
 
-export const style = StyleSheet.create({
+export const styles = StyleSheet.create({
     header: {
         backgroundColor: '#4630EB',
         fontSize: 32,
@@ -33,5 +38,10 @@ export const style = StyleSheet.create({
         textAlignVertical: 'center',
         textAlign: 'right',
         writingDirection: 'rtl',
+    },
+    headerTitle: {
+        fontSize: 18, // headerStyle fontSize doesn't work, use headerTitleStyle
+        fontWeight: 'bold',
+        textAlign: 'right', // For RTL support
     },
 })

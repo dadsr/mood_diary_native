@@ -2,22 +2,21 @@ import {JSX, useEffect, useState} from "react";
 import {Case} from "@/models/Case";
 import services from "@/services/Services";
 import {router} from "expo-router";
-import {Text, Animated, Button, View, StyleSheet, TouchableOpacity, SafeAreaView} from "react-native";
-import ScrollView = Animated.ScrollView;
+import {Animated, SafeAreaView, Text, TouchableOpacity, View} from "react-native";
 import CaseCard from "@/components/caseCard";
-import {globalStyles, colors, spacing } from "@/styles/globalStyles";
+import {globalStyles} from "@/styles/globalStyles";
+import ScrollView = Animated.ScrollView;
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 
-
 export default function HomeScreen(): JSX.Element {
-    const insets = useSafeAreaInsets();
 
+    const insets = useSafeAreaInsets();
     const [cases, setCases] = useState<Case[]>([]);
 
     useEffect(() => {
         services.getCases().then((cases) => setCases(cases));
-    },[]);
+    },[cases]);
 
 
     const addNewCase = () => {
@@ -27,7 +26,7 @@ export default function HomeScreen(): JSX.Element {
 
 
     return (
-        <SafeAreaView  style = {[globalStyles.container,{paddingBottom: insets.bottom}]}>
+        <SafeAreaView  style = {[globalStyles.container, {paddingBottom: Math.max(insets.bottom,20)}]}>
             <Text style = {globalStyles.heading}>רשימת אירועים:</Text>
             <ScrollView style = {globalStyles.scrollView}>
                 { cases.map(c => <CaseCard key={c.id} case={c} />) }
@@ -44,14 +43,3 @@ export default function HomeScreen(): JSX.Element {
 
 }
 
-
-
-// const styles = StyleSheet.create({
-//
-//     scrollView: {
-//         backgroundColor :'#4CD964',
-//         borderColor: '#000020',
-//         width: '100%',
-//         marginBottom: 16,
-//     },
-// });

@@ -71,7 +71,7 @@ export default function EditCase(): JSX.Element {
         caseInstance.caseName = data.caseName;
         caseInstance.caseDate = data.caseDate;
         caseInstance.thought = data.thought;
-        // caseInstance.emotions = data.emotions.map(e => new Emotion(e.getEmotion, e.getIntensity));
+        caseInstance.emotions = data.emotions.map(e => new Emotion(e.getEmotion, e.getIntensity));
         caseInstance.behavior = data.behavior;
         caseInstance.symptoms = data.symptoms;
 
@@ -84,10 +84,10 @@ export default function EditCase(): JSX.Element {
         router.back();
     };
 
+
     return (
-        <SafeAreaView  style = {[globalStyles.container,{paddingBottom: insets.bottom + 10}]}>
-            <ScrollView style={[globalStyles.container,styles.container]}>
-                <ScrollView>
+        <SafeAreaView  style = {[globalStyles.container, {paddingBottom: Math.max(insets.bottom+10,30)}]}>
+            <ScrollView style={globalStyles.view}>
                     <Text style={globalStyles.text} >אירוע:</Text>
                     <Controller
                         name="caseName"
@@ -157,11 +157,6 @@ export default function EditCase(): JSX.Element {
                             </>
                         )}
                     />
-
-                    {/*{errors.caseName && (*/}
-                    {/*    <Text style={styles.error}>{errors.caseDate.message}</Text>*/}
-                    {/*)}*/}
-
                     <Text style={globalStyles.text} >מחשבה:</Text>
                     <Controller
                         name="thought"
@@ -179,19 +174,19 @@ export default function EditCase(): JSX.Element {
                         )}
                     />
                     {/* Emotions Selector */}
-                    <View>
-                        <TouchableOpacity style={globalStyles.container} onPress={openModal}>
-                            <Text style={globalStyles.text}>בחירת רגשות</Text>
+                    <View style={[globalStyles.buttonContainer,{padding:20,borderWidth:10,borderRadius:10,borderColor:'rgba(76,105,229,0.67)'}]}>
+                        <TouchableOpacity style={[globalStyles.button,]} onPress={openModal}>
+                            <Text style={globalStyles.buttonText}>בחירת רגשות</Text>
                         </TouchableOpacity>
                         <Modal
                             visible={isModalVisible}
-                            animationType="slide"
+                            animationType="fade"
                             presentationStyle="pageSheet" // iOS style
                             onRequestClose={closeModal}
                         >
-                            <View style={globalStyles.container}>
-                                <View style={globalStyles.heading}>
-                                    <Text style={globalStyles.text}>בחירת רגשות</Text>
+                            <ScrollView style={globalStyles.container}>
+                                <View style={globalStyles.view}>
+                                    <Text style={globalStyles.heading}>בחירת רגשות</Text>
                                     <TouchableOpacity onPress={closeModal}>
                                         <Text style={globalStyles.closeButton}>✕</Text>
                                     </TouchableOpacity>
@@ -203,7 +198,7 @@ export default function EditCase(): JSX.Element {
                                 <TouchableOpacity style={globalStyles.button} onPress={closeModal}>
                                     <Text style={globalStyles.buttonText}>שמור</Text>
                                 </TouchableOpacity>
-                            </View>
+                            </ScrollView>
                         </Modal>
                     </View>
 
@@ -239,7 +234,6 @@ export default function EditCase(): JSX.Element {
                             />
                         )}
                     />
-                </ScrollView>
                 <View style={globalStyles.buttonContainer}>
                     <TouchableOpacity style={globalStyles.button} onPress={handleSubmit(submitForm)}>
                         <Text style={globalStyles.buttonText} >שמירה</Text>
@@ -252,7 +246,8 @@ export default function EditCase(): JSX.Element {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'rgba(242,117,0,0.05)',
+        backgroundColor: 'rgba(242,117,0,0.68)',
     },
+
 });
 
