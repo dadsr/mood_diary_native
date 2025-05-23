@@ -1,29 +1,37 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import {Stack} from 'expo-router';
+import {StyleSheet} from "react-native";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    return (
+        <Stack>
+            <Stack.Screen
+                name="index"
+                options={{
+                    title: 'Home',
+                    headerStyle: style.header,
+                    headerTintColor: '#fff',
+                }}
+            />
+            <Stack.Screen
+                name="editCase"
+                options={{
+                    title: 'Edit Case',
+                    headerStyle: { backgroundColor: '#4630EB' },
+                    headerTintColor: '#fff',
+                }}
+            />
+        </Stack>
+    );
 }
+
+export const style = StyleSheet.create({
+    header: {
+        backgroundColor: '#4630EB',
+        fontSize: 32,
+        fontWeight: 'bold',
+        textAlignVertical: 'center',
+        textAlign: 'right',
+        writingDirection: 'rtl',
+    },
+})
