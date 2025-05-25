@@ -17,13 +17,14 @@ import services from "@/services/Services";
 import {Emotion} from "@/models/Emotion";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {Case} from "@/models/Case";
-import {globalStyles} from "@/styles/globalStyles";
+import {colors, globalStyles} from "@/styles/globalStyles";
 import ScrollView = Animated.ScrollView;
 import {EmotionsSelector} from "@/components/emotionsSelector";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 
 export default function EditCase(): JSX.Element {
+    console.log("Edit Case");
     const insets = useSafeAreaInsets();
     const id: number = Number(useLocalSearchParams().id);
     const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
@@ -53,7 +54,7 @@ export default function EditCase(): JSX.Element {
                     setValue('thought', myCase.thought!);
                     setValue('behavior', myCase.behavior!);
                     setValue('symptoms', myCase.symptoms!);
-                    // setValue('emotions', myCase.emotions.map(item => item instanceof Emotion ? item : new Emotion(item.getEmotion, item.getIntensity)));
+                    setValue('emotions', myCase.emotions.map((emotion:Emotion) => new Emotion(emotion.getEmotion, emotion.getIntensity)));
                     setValue('behavior', myCase.behavior!);
                     setValue('symptoms', myCase.symptoms!);
                 }
@@ -71,7 +72,7 @@ export default function EditCase(): JSX.Element {
         caseInstance.caseName = data.caseName;
         caseInstance.caseDate = data.caseDate;
         caseInstance.thought = data.thought;
-        caseInstance.emotions = data.emotions.map(e => new Emotion(e.getEmotion, e.getIntensity));
+        caseInstance.emotions = data.emotions.map((emotion:Emotion) => new Emotion(emotion.getEmotion, emotion.getIntensity));
         caseInstance.behavior = data.behavior;
         caseInstance.symptoms = data.symptoms;
 
@@ -179,26 +180,32 @@ export default function EditCase(): JSX.Element {
                             <Text style={globalStyles.buttonText}>בחירת רגשות</Text>
                         </TouchableOpacity>
                         <Modal
+                            style={globalStyles.modalContent}
                             visible={isModalVisible}
                             animationType="fade"
                             presentationStyle="pageSheet" // iOS style
                             onRequestClose={closeModal}
                         >
-                            <ScrollView style={globalStyles.container}>
-                                <View style={globalStyles.view}>
-                                    <Text style={globalStyles.heading}>בחירת רגשות</Text>
+                            <ScrollView style={globalStyles.scrollView}>
+
+                                    <Text style={globalStyles.text} >בחירת רגשות</Text>
+
+                                <View style={[globalStyles.buttonContainer,{alignItems:'flex-start',margin:5}]}>
                                     <TouchableOpacity onPress={closeModal}>
-                                        <Text style={globalStyles.closeButton}>✕</Text>
+                                        <Text style={[{backgroundColor: colors.error,padding:4,borderWidth:1}]}>X</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={globalStyles.modalContent}>
+
+                                <View style={globalStyles.emotionsSelectorContainer}>
                                     <EmotionsSelector control={control} name="emotions" />
                                 </View>
+                            </ScrollView>
 
+                            <View style={globalStyles.buttonContainer}>
                                 <TouchableOpacity style={globalStyles.button} onPress={closeModal}>
                                     <Text style={globalStyles.buttonText}>שמור</Text>
                                 </TouchableOpacity>
-                            </ScrollView>
+                            </View>
                         </Modal>
                     </View>
 

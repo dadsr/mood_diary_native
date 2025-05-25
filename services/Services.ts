@@ -10,6 +10,7 @@ const  isWeb = (Platform.OS === 'web');
 export class Services {
 
     async getCases(): Promise<Case[]> {
+        console.log("getCases");
 
         let storedCases:string|null = null;
         if (isWeb) {
@@ -39,6 +40,8 @@ export class Services {
     }
 
     async getCase(id: number): Promise<Case|null>{
+        console.log("getCase");
+
         const cases:Case[] = await this.getCases();
         const index: number = cases.findIndex(c => c.id === id);
         if (index !== -1) {
@@ -48,6 +51,8 @@ export class Services {
     }
 
     async updateCase(updatedCase:Case): Promise<void>{
+        console.log("updateCase");
+
         const cases:Case[] =await this.getCases();
         const index = cases.findIndex(c => c.id === updatedCase.id);
         if(index !== -1) {
@@ -70,6 +75,8 @@ export class Services {
     }
 
     async addCase(newCase:Case): Promise<void> {
+        console.log("addCase");
+
         const cases:Case[] =await this.getCases();
         if(cases.length > 0){
             newCase.id =  Math.max(...cases.map(c => c.id || 0)) + 1 ;
@@ -92,6 +99,8 @@ export class Services {
     }
 
     async deleteCase(caseId:number):Promise<void> {
+        console.log("deleteCase");
+
         const cases:Case[] = await this.getCases();
         const newCases = cases.filter(caseItem => caseItem.id !== caseId);
         if(isWeb){

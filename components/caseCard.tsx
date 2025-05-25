@@ -5,6 +5,7 @@ import {router} from "expo-router";
 import services from "@/services/Services";
 import {globalStyles} from "@/styles/globalStyles";
 import {EmotionsSelector} from "@/components/emotionsSelector";
+import EmotionCard from "@/components/emotionCard";
 
 
 interface caseProps {
@@ -12,6 +13,7 @@ interface caseProps {
 }
 
 export default function CaseCard(props: caseProps): JSX.Element {
+    console.log("CaseCard");
     const {case: item } = props
     const [isModalVisible, setIsModalVisible] = useState(false);//open/close modal
 
@@ -25,7 +27,7 @@ export default function CaseCard(props: caseProps): JSX.Element {
 
     const deleteCase = () => {
         services.deleteCase(item.id);
-        router.back();
+        router.replace('/');
     };
 
     return (
@@ -43,22 +45,21 @@ export default function CaseCard(props: caseProps): JSX.Element {
                     animationType="slide"
                     presentationStyle="pageSheet"
                     onRequestClose={closeModal}
-                    transparent={true}
+                    // transparent={true}
                 >
                     <View style={globalStyles.container}>
                         <View style={globalStyles.heading}>
-                            <Text style={globalStyles.text}>רגשות</Text>
-                            <TouchableOpacity onPress={closeModal}>
-                                <Text style={globalStyles.closeButton}>✕</Text>
-                            </TouchableOpacity>
+                            <Text style={globalStyles.heading}>רגשות:</Text>
                         </View>
                         <View style={globalStyles.modalContent}>
-                            {/*<EmotionsSelector control={control} name="emotions" />*/}
+                           <EmotionCard emotions={item.emotions} />
+                        </View>
+                        <View style={globalStyles.buttonContainer}>
+                            <TouchableOpacity style={globalStyles.button} onPress={closeModal}>
+                                <Text style={globalStyles.buttonText}>חזור</Text>
+                            </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={globalStyles.button} onPress={closeModal}>
-                            <Text style={globalStyles.buttonText}>שמור</Text>
-                        </TouchableOpacity>
                     </View>
                 </Modal>
             </View>

@@ -122,38 +122,42 @@ export const globalStyles = StyleSheet.create({
         fontWeight: 'medium' as TextStyle['fontWeight'],
     },
 
+    closeButton: {
+        backgroundColor:'#FF3B30',
+        padding:'2%',
+    },
+
     emotionsSelectorContainer: {
-        flex: 1,
-        padding: 16,
-        backgroundColor: '#f5f5f5',
+        borderWidth:1,
+        borderColor:'#000'
+
+
     },
 
     multiSelectWrapper: {
-        marginVertical: 10,
-        position: 'relative',
         zIndex: 1000, // Ensure dropdown appears above other elements
-        width: '100%',
+        borderColor:'#000',
     },
 
     multiSelectContainer: {
+        width:'100%',
         height: 50,
-        borderColor: '#ddd',
+        borderColor: '#060000',
         borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 12,
         backgroundColor: 'white',
-        // textAlign: 'right',
+        textAlign: 'right',
     },
 
     multiSelectPlaceholder: {
         fontSize: 16,
-        color: '#999',
-        // textAlign: 'right',
+        color: colors.text,
     },
 
     multiSelectSelectedText: {
         fontSize: 16,
-        color: '#333',
+        color: colors.text,
         textAlign: 'right',
     },
 
@@ -268,18 +272,13 @@ export const globalStyles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-
-    closeButton:{
+    modalContent:{
         flex:1,
-        alignItems:'center',
-        width:30,
-        backgroundColor:'#a90000',
+        alignItems: 'stretch',
         borderWidth: 1,
-        borderRadius: 1,
-        borderColor:'#000',
-
+        borderColor: '#010000',
+        backgroundColor: '#000',
     },
-    modalContent:{},
     card: {
         borderWidth: spacing.xs,
         borderColor: colors.textLight,

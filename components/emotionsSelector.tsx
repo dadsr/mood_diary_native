@@ -19,6 +19,7 @@ interface EmotionsSelectorProps {
 }
 
 export function EmotionsSelector({control, name}: EmotionsSelectorProps): JSX.Element {
+    console.log("EmotionsSelector");
     // Create options for the Select component
     const emotionOptions: EmotionOption[] = Object.entries(EmotionsConst).map(([key, emotion]) => ({
         value: key as EmotionKey,
@@ -33,7 +34,6 @@ export function EmotionsSelector({control, name}: EmotionsSelectorProps): JSX.El
             markings.push(
                 <View key={i} style={[globalStyles.sliderMark, { left: `${i}%` }]}>
                     <View style={globalStyles.markLine} />
-                    <Text style={globalStyles.markLabel}>{i}</Text>
                 </View>
             );
         }
@@ -42,7 +42,7 @@ export function EmotionsSelector({control, name}: EmotionsSelectorProps): JSX.El
 
 
     return (
-        <View style={globalStyles.container}>
+        <View style={[globalStyles.container]}>
             <Text style={globalStyles.text}>רגשות:</Text>
 
             <Controller
@@ -61,7 +61,7 @@ export function EmotionsSelector({control, name}: EmotionsSelectorProps): JSX.El
                             )) : [];
 
                     return (
-                        <View style={[globalStyles.container,{direction:'rtl'}]} >
+                        <View  >
 
                             {Platform.OS === 'web' ? (
                                 <Select
@@ -79,12 +79,10 @@ export function EmotionsSelector({control, name}: EmotionsSelectorProps): JSX.El
                                 />
                             ) : (
                                 // Mobile
-                                <View style={globalStyles.multiSelectContainer}>
+                                <View style={globalStyles.emotionsSelectorContainer}>
 
                                     <MultiSelect
-                                        style={globalStyles.multiSelectContainer}
-                                        placeholderStyle={globalStyles.multiSelectPlaceholder}
-                                        selectedTextStyle={globalStyles.multiSelectSelectedText}
+                                        selectedTextStyle={globalStyles.multiSelectPlaceholder}
                                         inputSearchStyle={globalStyles.multiSelectSearch}
                                         iconStyle={globalStyles.multiSelectIcon}
                                         data={emotionOptions}
