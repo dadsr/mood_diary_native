@@ -242,7 +242,9 @@ export const globalStyles = StyleSheet.create({
         width: '100%',
         height: 40,
         zIndex: 2, // Ensure slider is above markings
-    },
+
+
+},
 
 // Update sliderContainer for better layout
     sliderContainer: {

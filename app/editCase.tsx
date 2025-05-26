@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     Platform,
     SafeAreaView,
+    ScrollView as DefaultScrollView,
     Modal
 } from 'react-native';
 import {Controller, useForm} from "react-hook-form";
@@ -87,8 +88,8 @@ export default function EditCase(): JSX.Element {
 
 
     return (
-        <SafeAreaView  style = {[globalStyles.container, {paddingBottom: Math.max(insets.bottom+10,30)}]}>
-            <ScrollView style={globalStyles.view}>
+        <SafeAreaView  style = {[globalStyles.container, {paddingBottom: Math.max(insets.bottom,20)}]}>
+            <DefaultScrollView  style = {globalStyles.scrollView}>
                     <Text style={globalStyles.text} >אירוע:</Text>
                     <Controller
                         name="caseName"
@@ -183,7 +184,7 @@ export default function EditCase(): JSX.Element {
                             style={globalStyles.modalContent}
                             visible={isModalVisible}
                             animationType="fade"
-                            presentationStyle="pageSheet" // iOS style
+                            presentationStyle="pageSheet"
                             onRequestClose={closeModal}
                         >
                             <ScrollView style={globalStyles.scrollView}>
@@ -241,12 +242,12 @@ export default function EditCase(): JSX.Element {
                             />
                         )}
                     />
-                <View style={globalStyles.buttonContainer}>
-                    <TouchableOpacity style={globalStyles.button} onPress={handleSubmit(submitForm)}>
-                        <Text style={globalStyles.buttonText} >שמירה</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+            </DefaultScrollView>
+            <View style={globalStyles.buttonContainer}>
+                <TouchableOpacity style={globalStyles.button} onPress={handleSubmit(submitForm)}>
+                    <Text style={globalStyles.buttonText} >שמירה</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }

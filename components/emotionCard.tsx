@@ -40,19 +40,24 @@ export default function EmotionCard(props: EmotionsProps) {
                 emotions.map((emotion:Emotion, index: number) => (
                     <View key={index} style={globalStyles.sliderContainer}>
                         <Text style={globalStyles.emotionLabel}>{emotion.displayName}</Text>
+
                         <View style={globalStyles.sliderWithMarkings} >
                             <View style={globalStyles.markingsContainer}>
                                 {renderSliderMarkings()}
                             </View>
+
                             <Slider
                                 style={globalStyles.slider}
                                 minimumValue={0}
                                 maximumValue={100}
                                 step={10}
                                 value={emotion.getIntensity}
-                                minimumTrackTintColor="#007AFF"
-                                maximumTrackTintColor="#CCCCCC"
+                                minimumTrackTintColor="#4630EB"
+                                maximumTrackTintColor="#4630EB"
+                                thumbTintColor="#4630EB"
+                                disabled={true}
                             />
+                            <Text style={globalStyles.intensityValue}>{emotion.getIntensity}%</Text>
                         </View>
                     </View>
                 ))

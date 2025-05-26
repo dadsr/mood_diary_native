@@ -62,7 +62,6 @@ export function EmotionsSelector({control, name}: EmotionsSelectorProps): JSX.El
 
                     return (
                         <View  >
-
                             {Platform.OS === 'web' ? (
                                 <Select
                                     isMulti
