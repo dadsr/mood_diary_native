@@ -9,15 +9,15 @@ import {globalStyles} from "@/styles/globalStyles";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 
-export default function HomeScreen(): JSX.Element {
-    console.log("HomeScreen");
+export default function Index(): JSX.Element {
+    console.log("Index");
 
     const insets = useSafeAreaInsets();
     const [cases, setCases] = useState<Case[]>([]);
 
     useFocusEffect (
         useCallback(() => {
-            console.log("HomeScreen focused, fetching cases...");
+            console.log("Index focused, fetching cases...");
             services.getCases().then((fetchedCases: Case[]) => {
                     setCases(fetchedCases)
             })

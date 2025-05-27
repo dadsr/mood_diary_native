@@ -1,47 +1,34 @@
-import {Stack} from 'expo-router';
-import {StyleSheet} from "react-native";
+import { Tabs } from 'expo-router';
+import { FontAwesome } from '@expo/vector-icons';
 
-
-export default function RootLayout() {
+export default function TabLayout() {
     return (
-        <Stack>
-            <Stack.Screen
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: 'blue',
+            }}
+        >
+            <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Home',
-                    headerStyle: styles.header,
-                    headerTintColor: '#fff',
-                    headerTitleStyle: styles.headerTitle,
+                    title: 'Tab 1',
+                    tabBarIcon: ({ color }) => <FontAwesome name="home" size={28} color={color} />,
                 }}
             />
-            <Stack.Screen
-                name="editCase"
+            <Tabs.Screen
+                name="secondTab"
                 options={{
-                    title: 'Edit Case',
-                    headerStyle: { backgroundColor: '#4630EB' },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: styles.headerTitle,
-                    presentation: 'modal',
-                    headerBackTitle: 'Back',
-                    gestureEnabled: true,
+                    title: 'Tab 2',
+                    tabBarIcon: ({ color }) => <FontAwesome name="search" size={28} color={color} />,
                 }}
             />
-        </Stack>
+            <Tabs.Screen
+                name="thirdTab"
+                options={{
+                    title: 'Tab 3',
+                    tabBarIcon: ({ color }) => <FontAwesome name="cog" size={28} color={color} />,
+                }}
+            />
+        </Tabs>
     );
 }
-
-export const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#4630EB',
-        fontSize: 32,
-        fontWeight: 'bold',
-        textAlignVertical: 'center',
-        textAlign: 'right',
-        writingDirection: 'rtl',
-    },
-    headerTitle: {
-        fontSize: 18, // headerStyle fontSize doesn't work, use headerTitleStyle
-        fontWeight: 'bold',
-        textAlign: 'right', // For RTL support
-    },
-})
