@@ -88,7 +88,9 @@ export default function EditCase(): JSX.Element {
 
 
     return (
-        <SafeAreaView  style = {[globalStyles.container, {paddingBottom: Math.max(insets.bottom,20)}]}>
+            <SafeAreaView  style = {[globalStyles.container, {
+                paddingTop: Math.max(insets.top + 8,20),
+                paddingBottom: Math.max(insets.bottom - 25,20)}]}>
             <DefaultScrollView  style = {globalStyles.scrollView}>
                     <Text style={globalStyles.text} >אירוע:</Text>
                     <Controller

@@ -1,33 +1,41 @@
 import {JSX, useState} from "react";
-import {Text, View, StyleSheet, Button, TouchableOpacity, Modal} from "react-native";
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Case} from "@/models/Case";
 import {router} from "expo-router";
 import services from "@/services/Services";
 import {globalStyles} from "@/styles/globalStyles";
-import {EmotionsSelector} from "@/components/emotionsSelector";
 import EmotionCard from "@/components/emotionCard";
 
 
+
 interface caseProps {
+    diary: number;
     case: Case;
 }
 
 export default function CaseCard(props: caseProps): JSX.Element {
     console.log("CaseCard");
-    const {case: item } = props
+    const {diary: diary,case: item } = props
     const [isModalVisible, setIsModalVisible] = useState(false);//open/close modal
 
     const openModal = () => setIsModalVisible(true);
     const closeModal = () => setIsModalVisible(false);
 
     const editCase = () => {
-        router.push({ pathname: '/editCase', params: { id: item.id } });
+        router.push({ pathname: '/editCase', params: {diary: diary, id: item.id } });
     };
 
 
     const deleteCase = () => {
-        services.deleteCase(item.id);
-        router.replace('/');
+        services.deleteCase(diary, item.id);
+        switch(diary) {
+            case 1:
+                router.replace('/(tabs)/firstDiary');
+            case 2:
+                router.replace('/(tabs)/secondDiary');
+            case 3:
+                router.replace('/(tabs)/thirdDiary');
+        }
     };
 
     return (
@@ -64,11 +72,20 @@ export default function CaseCard(props: caseProps): JSX.Element {
                 </Modal>
             </View>
 
-            <Text style={globalStyles.text} >התנהגות: {item.behavior}</Text>
-            <Text style={globalStyles.text} >סימפטומים: {item.symptoms}</Text>
+            {diary === 1 &&(
+                <>
+                <Text style={globalStyles.text} >התנהגות: {item.behavior}</Text>
+                <Text style={globalStyles.text} >סימפטומים: {item.symptoms}</Text>
+                </>
+            )}
+            {diary === 2 &&(
+                <>
+                    <Text style={globalStyles.text} >עיוותי חשיבה: {item.symptoms}</Text>
+                    <Text style={globalStyles.text} >מחשבות אוטומטיות: {item.behavior}</Text>
+                </>
+            )}
 
             <View style={globalStyles.buttonContainer}>
-
                 <TouchableOpacity style={globalStyles.button} onPress={editCase}>
                     <Text style={globalStyles.buttonText} >עריכה</Text>
                 </TouchableOpacity>

@@ -9,14 +9,13 @@ const  isWeb = (Platform.OS === 'web');
 
 export class Services {
 
-    async getCases(): Promise<Case[]> {
-        console.log("getCases");
-
+    async getCases(diary:number): Promise<Case[]> {
+        console.log("getCases diary ",diary);
         let storedCases:string|null = null;
         if (isWeb) {
-            storedCases = localStorage.getItem('cases');
+            storedCases = localStorage.getItem('cases'+diary);
         } else {
-            storedCases = await AsyncStorage.getItem('cases');
+            storedCases = await AsyncStorage.getItem('cases'+diary);
         }
         if(storedCases) {
             const parsed = JSON.parse(storedCases) as SerializedCase[];
@@ -39,10 +38,10 @@ export class Services {
         return [];
     }
 
-    async getCase(id: number): Promise<Case|null>{
-        console.log("getCase");
+    async getCase(diary:number,id: number): Promise<Case|null>{
+        console.log("getCase ", id);
 
-        const cases:Case[] = await this.getCases();
+        const cases:Case[] = await this.getCases(diary);
         const index: number = cases.findIndex(c => c.id === id);
         if (index !== -1) {
             return cases[index];
@@ -50,10 +49,10 @@ export class Services {
         return null;
     }
 
-    async updateCase(updatedCase:Case): Promise<void>{
-        console.log("updateCase");
+    async updateCase(diary:number,updatedCase:Case): Promise<void>{
+        console.log("updateCase diary ",diary);
 
-        const cases:Case[] =await this.getCases();
+        const cases:Case[] =await this.getCases(diary);
         const index = cases.findIndex(c => c.id === updatedCase.id);
         if(index !== -1) {
             const serializedCase: SerializedCase = {
@@ -67,17 +66,17 @@ export class Services {
             const updatedCases = [...cases];
             updatedCases[index] = this.parseSerializedCase(serializedCase);
             if (isWeb) {
-                localStorage.setItem('cases', JSON.stringify(updatedCases.map(c => this.serializeCase(c))));
+                localStorage.setItem('cases'+diary, JSON.stringify(updatedCases.map(c => this.serializeCase(c))));
             } else {
-                await AsyncStorage.setItem('cases', JSON.stringify(updatedCases.map(c => this.serializeCase(c))));
+                await AsyncStorage.setItem('cases'+diary, JSON.stringify(updatedCases.map(c => this.serializeCase(c))));
             }
         }
     }
 
-    async addCase(newCase:Case): Promise<void> {
-        console.log("addCase");
+    async addCase(diary:number,newCase:Case): Promise<void> {
+        console.log("addCase diary ",diary);
 
-        const cases:Case[] =await this.getCases();
+        const cases:Case[] =await this.getCases(diary);
         if(cases.length > 0){
             newCase.id =  Math.max(...cases.map(c => c.id || 0)) + 1 ;
         } else{
@@ -92,21 +91,21 @@ export class Services {
             caseDate: newCase.caseDate.toISOString()
         };
         if(isWeb){
-            localStorage.setItem('cases', JSON.stringify([...cases, serializedCase]));
+            localStorage.setItem('cases'+diary, JSON.stringify([...cases, serializedCase]));
         } else{
-            await AsyncStorage.setItem('cases', JSON.stringify([...cases, serializedCase]));
+            await AsyncStorage.setItem('cases'+diary, JSON.stringify([...cases, serializedCase]));
         }
     }
 
-    async deleteCase(caseId:number):Promise<void> {
-        console.log("deleteCase");
+    async deleteCase(diary:number, caseId:number):Promise<void> {
+        console.log("deleteCase ",caseId);
 
-        const cases:Case[] = await this.getCases();
+        const cases:Case[] = await this.getCases(diary);
         const newCases = cases.filter(caseItem => caseItem.id !== caseId);
         if(isWeb){
-            localStorage.setItem('cases', JSON.stringify(newCases));
+            localStorage.setItem('cases'+diary, JSON.stringify(newCases));
         } else{
-            await AsyncStorage.setItem('cases', JSON.stringify(newCases));
+            await AsyncStorage.setItem('cases'+diary, JSON.stringify(newCases));
         }
     }
 

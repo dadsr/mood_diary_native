@@ -9,18 +9,17 @@ import {globalStyles} from "@/styles/globalStyles";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 
-export default function secondDiary(): JSX.Element {
-    console.log("SecondDiary");
-    const diary = 2;
-
+export default function FirstDiary(): JSX.Element {
+    console.log("FirstDiary");
+    const diary = 1;
     const insets = useSafeAreaInsets();
     const [cases, setCases] = useState<Case[]>([]);
 
     useFocusEffect (
         useCallback(() => {
-            console.log("SecondDiary focused, fetching cases...");
+            console.log("FirstDiary focused, fetching cases...");
             services.getCases(diary).then((fetchedCases: Case[]) => {
-                setCases(fetchedCases)
+                    setCases(fetchedCases)
             })
         },[])
     );
@@ -46,7 +45,7 @@ export default function secondDiary(): JSX.Element {
                         <Text style={globalStyles.text}>לא נמצאו אירועים.</Text>
                         <Text style={globalStyles.text}>לחץ על הוספת אירוע כדי להתחיל.</Text>
                     </View>
-                )}
+            )}
             </DefaultScrollView >
             <View style={globalStyles.buttonContainer}>
                 <TouchableOpacity style={globalStyles.button} onPress={addNewCase}>

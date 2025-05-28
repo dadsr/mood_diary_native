@@ -1,33 +1,21 @@
-import { Tabs } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';
+import { Tabs, TabList, TabTrigger, TabSlot } from 'expo-router/ui';
+import { Text } from 'react-native';
 
-export default function TabLayout() {
+export default function Layout() {
     return (
         <Tabs>
-            <Tabs.Screen
-                name="index"
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <FontAwesome name="book" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="secondTab"
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <FontAwesome name="file-text-o" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="thirdTab"
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (
-                        <FontAwesome name="edit" size={size} color={color} />
-                    ),
-                }}
-            />
+            <TabSlot />
+            <TabList>
+                <TabTrigger name="diary1" href="/1" group="diary">
+                    <Text>יומן 1</Text>
+                </TabTrigger>
+                <TabTrigger name="diary2" href="/2" group="diary">
+                    <Text>יומן 2</Text>
+                </TabTrigger>
+                <TabTrigger name="diary3" href="/3" group="diary">
+                    <Text>יומן 3</Text>
+                </TabTrigger>
+            </TabList>
         </Tabs>
     );
 }

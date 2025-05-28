@@ -120,6 +120,7 @@ export const globalStyles = StyleSheet.create({
         writingDirection: 'rtl',
         color: colors.white,
         fontWeight: 'medium' as TextStyle['fontWeight'],
+
     },
 
     closeButton: {
@@ -290,10 +291,7 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 8,
         padding: spacing.m,
         marginVertical: spacing.s,
-        shadowColor: colors.black,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.5,
-        shadowRadius: 4,
+        boxShadow: "0px 2px 4px rgba(0,0,0,0.25)",
         elevation: 3,
     },
 
